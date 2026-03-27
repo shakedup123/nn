@@ -108,7 +108,6 @@
         .project-info h3 { font-family:'Space Grotesk', sans-serif; margin-bottom:0.5rem; }
         .project-info p { color: var(--text-dim); font-size:0.95rem; }
 
-        /* --- Ratings Dashboard --- */
         .rating-summary {
             display: flex; align-items: center; justify-content: center; gap: 4rem;
             margin-bottom: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.02);
@@ -127,7 +126,6 @@
         }
         .review-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
 
-        /* Modal */
         .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
         .modal.show { display:flex; }
         .modal-content { background:#111; padding:2rem; border-radius:6px; width:90%; max-width:400px; color:#fff; position:relative; border: 1px solid var(--border); }
@@ -256,7 +254,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// Canvas Logic
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let dots = [];
@@ -272,7 +269,6 @@ function animate(){
 }
 window.addEventListener('resize', init); init(); animate();
 
-// Supabase Logic
 const _supabase = window.supabase.createClient('https://rbopuclyinxymbwoelqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJib3B1Y2x5aW54eW1id29lbHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzQ5OTQsImV4cCI6MjA5MDE1MDk5NH0.uk7SW8LJXzMkj_TBkJ3BVKAH_W8n7poBKUR2I_umM6A');
 let currentUser = null;
 
@@ -281,7 +277,6 @@ async function loadReviews(){
     const container = document.getElementById('reviews-container');
     if(error || !data) return;
 
-    // Calculate Stats
     const total = data.length;
     const avg = total > 0 ? (data.reduce((acc, curr) => acc + curr.rating, 0) / total).toFixed(1) : "0.0";
     document.getElementById('avg-val').innerText = avg;
@@ -292,7 +287,6 @@ async function loadReviews(){
         document.getElementById(`bar-${i}`).style.width = total > 0 ? (count/total)*100 + '%' : '0%';
     }
 
-    // Render Cards with Text
     container.innerHTML = '';
     data.forEach(r => {
         const div = document.createElement('div');
