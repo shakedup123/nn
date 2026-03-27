@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Scripter</title>
+    <title>Portfolio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
 
@@ -12,7 +12,7 @@
             --accent: #ffffff;
             --card: #080808;
             --text-dim: #666;
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.15);
             --nav-bg: rgba(2, 2, 2, 0.9);
         }
 
@@ -26,7 +26,6 @@
             overflow-x:hidden;
         }
 
-        /* --- Navigation --- */
         nav {
             position: fixed;
             top: 0; width: 100%; height: 70px;
@@ -42,27 +41,28 @@
         }
         .nav-links a:hover { color: var(--accent); }
 
-        /* --- Hero Section --- */
         .hero {
             height:100vh; display:flex; flex-direction:column;
             justify-content:center; align-items:center; text-align:center;
             position:relative; z-index:1;
         }
+
         #bg-canvas { position:absolute; top:0; left:0; width:100%; height:100vh; z-index:0; pointer-events:none; }
+
         .hero h1 {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(5rem,15vw,11rem);
+            font-size: clamp(5rem,18vw,11rem);
             font-weight:700; letter-spacing:-8px; line-height:0.9;
-            background: linear-gradient(to bottom, #fff 20%, #444 95%);
+            background: linear-gradient(to bottom, #fff 20%, #666 50%, #000 95%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             z-index:2;
         }
+
         .hero p {
             font-size:0.8rem; color: var(--text-dim); letter-spacing:4px;
             text-transform: uppercase; margin:2rem 0 3rem; z-index:2;
         }
 
-        /* --- Buttons --- */
         .scroll-btn {
             z-index:10;
             background:white; color:black;
@@ -73,83 +73,74 @@
             transition:0.4s cubic-bezier(0.16,1,0.3,1);
             border:1px solid white;
             cursor: pointer;
-            display: inline-block;
         }
         .scroll-btn:hover { background:transparent; color:white; transform:scale(1.05); }
 
-        #add-review-btn { display: block; margin: 4rem auto; max-width: fit-content; }
-
-        /* --- Experience & Projects --- */
-        .section-container { max-width:1100px; margin:0 auto; padding:120px 2rem; }
-        h2 { font-family:'Space Grotesk', sans-serif; font-size:3.5rem; margin-bottom:4rem; text-align:center; letter-spacing:-2px; }
-
         .experience-section { padding: 8rem 2rem; background:#000; border-top:1px solid var(--border); }
-        .experience-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); max-width:1100px; margin:0 auto; gap:2rem; }
-        .exp-card { position:relative; height:300px; border-radius:4px; overflow:hidden; text-decoration:none; border:1px solid var(--border); background:#050505; transition:0.5s; }
+        .experience-section h4 { text-align:center; color:#444; font-size:0.7rem; letter-spacing:5px; margin-bottom:5rem; text-transform:uppercase;}
+
+        .experience-grid {
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+            max-width:1200px; margin:0 auto; gap:2rem;
+        }
+
+        .exp-card {
+            position:relative; height:350px; border-radius:4px; overflow:hidden;
+            text-decoration:none; border:1px solid var(--border);
+            transition:0.5s cubic-bezier(0.16,1,0.3,1); background:#050505;
+        }
         .exp-card:hover { transform: translateY(-10px); border-color:#fff; }
-        .exp-content { position:relative; z-index:1; height:100%; padding:2.5rem; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); }
-        .exp-name { font-family:'Space Grotesk', sans-serif; font-size:1.4rem; font-weight:700; color:#fff; }
+        .exp-thumb { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.15; filter: grayscale(1); transition:0.8s; z-index:0; }
+        .exp-card:hover .exp-thumb { opacity:0.4; filter:grayscale(0); transform:scale(1.1); }
+        .exp-content { position:relative; z-index:1; height:100%; padding:2.5rem; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%); }
+        .exp-name { font-family:'Space Grotesk', sans-serif; font-size:1.4rem; font-weight:700; color:#fff; margin-bottom:0.5rem; }
+        .exp-visits { font-size:0.75rem; color:#aaa; letter-spacing:2px; font-weight:600; }
+
+        .section-container { max-width:1200px; margin:0 auto; padding:120px 2rem; }
+        h2 { font-family:'Space Grotesk', sans-serif; font-size:3rem; margin-bottom:4rem; text-align:center; letter-spacing:-2px; }
+
+        .project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(500px,1fr)); gap:3rem; }
+        .project-card { background:var(--card); border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:0.4s; }
+        .project-card:hover { border-color:#555; }
+        .video-container { position:relative; width:100%; padding-bottom:56.25%; background:#000; }
+        .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+        .project-info { padding:2.5rem; }
+        .project-info h3 { font-family:'Space Grotesk', sans-serif; margin-bottom:0.5rem; }
+        .project-info p { color: var(--text-dim); font-size:0.95rem; }
 
         /* --- Ratings Dashboard --- */
         .rating-summary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5rem;
-            margin-bottom: 4rem;
-            padding: 4rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center; gap: 4rem;
+            margin-bottom: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border); border-radius: 4px;
         }
         .avg-box { text-align: center; }
-        .avg-number { font-size: 6rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1; }
-        .avg-label { font-size: 0.6rem; color: #555; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px; }
+        .avg-number { font-size: 5rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1; }
+        .rating-bars { flex-grow: 1; max-width: 400px; }
+        .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.7rem; color: #666; }
+        .bar-bg { flex-grow: 1; height: 4px; background: #111; border-radius: 2px; overflow: hidden; }
+        .bar-fill { height: 100%; background: #fff; width: 0%; transition: width 1s ease-out; }
 
-        .rating-bars { flex-grow: 1; max-width: 350px; }
-        .bar-row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; font-size: 0.7rem; color: #666; font-weight: 600; }
-        .bar-bg { flex-grow: 1; height: 3px; background: #111; border-radius: 10px; overflow: hidden; }
-        .bar-fill { height: 100%; background: #fff; width: 0%; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
-
-        #reviews-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            justify-content: center;
-            max-width: 900px;
-            margin: 0 auto;
+        .review-card {
+            background: #080808; border: 1px solid var(--border);
+            padding: 1.5rem; margin-bottom: 1rem; border-radius: 4px;
         }
-        .review-chip {
-            padding: 10px 18px;
-            background: #080808;
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #888;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s;
-        }
-        .review-chip:hover { border-color: #fff; color: #fff; }
-        .review-chip span { color: #ffcc00; font-size: 0.8rem; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
 
-        /* --- Modal --- */
-        .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+        /* Modal */
+        .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
         .modal.show { display:flex; }
-        .modal-content { background:#0a0a0a; padding:3rem; border-radius:4px; width:90%; max-width:400px; text-align:center; border: 1px solid var(--border); }
-        .close { position:absolute; top:20px; right:20px; cursor:pointer; font-size:1.5rem; }
-        .rating-options { display: flex; justify-content: center; gap: 15px; margin: 2rem 0; }
-        .rating-options input { display: none; }
-        .rating-options label { font-size: 1.2rem; cursor: pointer; color: #333; transition: 0.2s; border: 1px solid #333; padding: 10px 15px; border-radius: 4px; }
-        .rating-options input:checked + label { background: white; color: black; border-color: white; }
+        .modal-content { background:#111; padding:2rem; border-radius:6px; width:90%; max-width:400px; color:#fff; position:relative; border: 1px solid var(--border); }
+        .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; }
+        textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1px solid #333; background:#000; color:#fff; margin-top: 10px; }
 
-        footer { text-align:center; padding:8rem 2rem; color:#222; font-size:0.6rem; letter-spacing:8px; text-transform: uppercase; }
+        #add-review-btn { display: block; margin: 4rem auto; max-width: fit-content; }
+
+        footer { text-align:center; padding:8rem 2rem; color:#111; font-size:0.6rem; letter-spacing:8px; }
 
         @media (max-width:768px) {
-            .rating-summary { flex-direction: column; gap: 3rem; padding: 2rem; }
-            .hero h1 { font-size: 5rem; letter-spacing: -3px; }
+            .rating-summary { flex-direction: column; gap: 2rem; }
+            .project-grid { grid-template-columns:1fr; }
         }
     </style>
 </head>
@@ -160,7 +151,7 @@
         <a href="#">Home</a>
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
-        <a href="#reviews">Ratings</a>
+        <a href="#reviews">Reviews</a>
     </div>
 </nav>
 
@@ -168,37 +159,67 @@
 
 <section class="hero">
     <h1>SCRIPTER.</h1>
-    <p>Professional Roblox Scripter & Systems Architect</p>
-    <a href="#experience" class="scroll-btn">Enter Portfolio</a>
+    <p>I am fourl, a professional scripter with 4+ years of experience.</p>
+    <a href="#experience" class="scroll-btn">View Projects</a>
 </section>
 
 <section id="experience" class="experience-section">
+    <h4>Games Developed For</h4>
     <div class="experience-grid">
-        <a href="#" class="exp-card">
+        <a href="https://www.roblox.com/games/16404660684/BODYCAM" class="exp-card" target="_blank">
+            <img src="bodycam.png" class="exp-thumb" alt="Body Cam">
             <div class="exp-content">
                 <span class="exp-name">Body Cam</span>
-                <span style="font-size: 0.6rem; color: #555; letter-spacing: 2px;">153.4M+ VISITS</span>
-            </div>
-        </a>
-        <a href="#" class="exp-card">
-            <div class="exp-content">
-                <span class="exp-name">Combat System</span>
-                <span style="font-size: 0.6rem; color: #555; letter-spacing: 2px;">RAYCAST ARCHITECTURE</span>
+                <span class="exp-visits">153.4M+ VISITS</span>
             </div>
         </a>
     </div>
 </section>
 
+<section id="projects" class="section-container">
+    <h2>Example Works</h2>
+    <div class="project-grid">
+        <div class="project-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/vMTlYW00iaw" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h3>High Quality Inventory System</h3>
+                <p>A high quality inventory system that can be used universally.</p>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/kT_VbMqVZd4" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h3>Matchmaking System</h3>
+                <p>Matchmaking system that allows two players on different servers to teleport together.</p>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/ppBEsNG_EAI" allowfullscreen></iframe>
+            </div>
+            <div class="project-info">
+                <h3>Combat System</h3>
+                <p>M1 Combat System using raycasts for low latency and accurate hits.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="reviews" class="section-container">
-    <h2>Client Feedback</h2>
+    <h2>User Reviews</h2>
     
     <div class="rating-summary">
         <div class="avg-box">
             <span class="avg-number" id="avg-val">0.0</span>
-            <div id="avg-stars" style="color: #ffcc00; margin-top: 5px;"></div>
-            <p class="avg-label">Overall Rating</p>
+            <div id="avg-stars" style="color: #ffcc00;"></div>
+            <p style="font-size: 0.6rem; color: #444; text-transform: uppercase; margin-top: 10px;">Overall Rating</p>
         </div>
-
         <div class="rating-bars">
             <div class="bar-row">5 <div class="bar-bg"><div id="bar-5" class="bar-fill"></div></div></div>
             <div class="bar-row">4 <div class="bar-bg"><div id="bar-4" class="bar-fill"></div></div></div>
@@ -208,24 +229,24 @@
         </div>
     </div>
 
-    <div id="reviews-container">
-        </div>
+    <div id="reviews-container"></div>
 
-    <button id="add-review-btn" class="scroll-btn">Leave a Rating</button>
+    <button id="add-review-btn" class="scroll-btn">Login to Review</button>
 
     <div id="review-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3 style="font-family: 'Space Grotesk'; letter-spacing: -1px; font-size: 1.5rem;">Select Rating</h3>
+            <h3>Submit Review</h3>
             <form id="review-form">
-                <div class="rating-options">
-                    <input type="radio" name="rating" id="r1" value="1"><label for="r1">1</label>
-                    <input type="radio" name="rating" id="r2" value="2"><label for="r2">2</label>
-                    <input type="radio" name="rating" id="r3" value="3"><label for="r3">3</label>
-                    <input type="radio" name="rating" id="r4" value="4"><label for="r4">4</label>
-                    <input type="radio" name="rating" id="r5" value="5" checked><label for="r5">5</label>
-                </div>
-                <button type="submit" class="scroll-btn" style="width: 100%;">Submit Rating</button>
+                <label>Rating:</label><br>
+                <input type="radio" name="rating" value="1"> 1
+                <input type="radio" name="rating" value="2"> 2
+                <input type="radio" name="rating" value="3"> 3
+                <input type="radio" name="rating" value="4"> 4
+                <input type="radio" name="rating" value="5" checked> 5
+                <br>
+                <textarea id="review-text" placeholder="Write a comment..."></textarea><br><br>
+                <button type="submit" class="scroll-btn" style="width: 100%;">Submit</button>
             </form>
         </div>
     </div>
@@ -234,9 +255,8 @@
 <footer>&copy; 2026 SYSTEMS DESIGN</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-// --- Background Animation ---
+// Canvas Logic
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let dots = [];
@@ -246,47 +266,42 @@ function init() {
     for(let i=0;i<60;i++){ dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 }); }
 }
 function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="rgba(255,255,255,0.15)";
+    ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="rgba(255,255,255,0.25)";
     dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>canvas.width)d.vx*=-1; if(d.y<0||d.y>canvas.height)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,1,0,Math.PI*2); ctx.fill(); });
     requestAnimationFrame(animate);
 }
 window.addEventListener('resize', init); init(); animate();
 
-// --- Supabase Logic ---
-const _supabase = window.supabase.createClient(
-    'https://rbopuclyinxymbwoelqb.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJib3B1Y2x5aW54eW1id29lbHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzQ5OTQsImV4cCI6MjA5MDE1MDk5NH0.uk7SW8LJXzMkj_TBkJ3BVKAH_W8n7poBKUR2I_umM6A'
-);
-
+// Supabase Logic
+const _supabase = window.supabase.createClient('https://rbopuclyinxymbwoelqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJib3B1Y2x5aW54eW1id29lbHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzQ5OTQsImV4cCI6MjA5MDE1MDk5NH0.uk7SW8LJXzMkj_TBkJ3BVKAH_W8n7poBKUR2I_umM6A');
 let currentUser = null;
 
 async function loadReviews(){
     const { data, error } = await _supabase.from('reviews').select('*').order('created_at',{ascending:false});
     const container = document.getElementById('reviews-container');
-    
     if(error || !data) return;
 
-    // --- Stats Calculation ---
+    // Calculate Stats
     const total = data.length;
     const avg = total > 0 ? (data.reduce((acc, curr) => acc + curr.rating, 0) / total).toFixed(1) : "0.0";
-    
     document.getElementById('avg-val').innerText = avg;
     document.getElementById('avg-stars').innerText = "★".repeat(Math.round(avg));
 
-    // --- Update Progress Bars ---
-    for(let i=1; i<=5; i++) {
+    for(let i=1; i<=5; i++){
         const count = data.filter(r => r.rating === i).length;
-        const percent = total > 0 ? (count / total) * 100 : 0;
-        document.getElementById(`bar-${i}`).style.width = percent + '%';
+        document.getElementById(`bar-${i}`).style.width = total > 0 ? (count/total)*100 + '%' : '0%';
     }
 
-    // --- Render Chips ---
-    container.innerHTML='';
-    data.forEach(r=>{
-        const chip = document.createElement('div');
-        chip.className = 'review-chip';
-        chip.innerHTML=`${r.username.split(' ')[0]} <span>${"★".repeat(r.rating)}</span>`;
-        container.appendChild(chip);
+    // Render Cards with Text
+    container.innerHTML = '';
+    data.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'review-card';
+        div.innerHTML = `
+            <div class="review-header"><strong>${r.username}</strong> <span>${"★".repeat(r.rating)}</span></div>
+            <p style="color:#888; font-size:0.9rem;">${r.text || 'No comment provided.'}</p>
+        `;
+        container.appendChild(div);
     });
 }
 
@@ -303,23 +318,22 @@ document.getElementById('add-review-btn').addEventListener('click', async () => 
 document.getElementById('review-form').addEventListener('submit', async e => {
     e.preventDefault();
     const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
-    
+    const text = document.getElementById('review-text').value;
     const { error } = await _supabase.from('reviews').insert([{
         user_id: currentUser.id,
         username: currentUser.user_metadata.full_name || 'User',
-        rating: rating
+        rating: rating,
+        text: text
     }]);
-
     if (!error) {
         document.getElementById('review-modal').classList.remove('show');
+        document.getElementById('review-form').reset();
         loadReviews();
     }
 });
 
 document.querySelector('.close').onclick = () => document.getElementById('review-modal').classList.remove('show');
-
 loadReviews();
 </script>
-
 </body>
 </html>
