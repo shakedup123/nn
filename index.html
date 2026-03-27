@@ -1,154 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Scripter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
 
-:root {
-    --bg: #020202;
-    --accent: #ffffff;
-    --card: #080808;
-    --text-dim: #666;
-    --border: rgba(255, 255, 255, 0.15);
-    --nav-bg: rgba(2, 2, 2, 0.9);
-}
+        :root {
+            --bg: #020202;
+            --accent: #ffffff;
+            --card: #080808;
+            --text-dim: #666;
+            --border: rgba(255, 255, 255, 0.15);
+            --nav-bg: rgba(2, 2, 2, 0.9);
+        }
 
-* { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+        * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg);
-    color:white;
-    line-height:1.6;
-    overflow-x:hidden;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color:white;
+            line-height:1.6;
+            overflow-x:hidden;
+        }
 
-nav {
-    position: fixed;
-    top: 0; width: 100%; height: 70px;
-    display: flex; justify-content: center; align-items: center;
-    background: var(--nav-bg); backdrop-filter: blur(20px);
-    z-index:1000; border-bottom: 1px solid var(--border);
-}
-.nav-links { display:flex; gap:3rem; }
-.nav-links a {
-    color: var(--text-dim); text-decoration:none;
-    font-size:0.65rem; font-weight:700; text-transform:uppercase;
-    letter-spacing:3px; transition:0.4s;
-}
-.nav-links a:hover { color: var(--accent); }
+        nav {
+            position: fixed;
+            top: 0; width: 100%; height: 70px;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--nav-bg); backdrop-filter: blur(20px);
+            z-index:1000; border-bottom: 1px solid var(--border);
+        }
+        .nav-links { display:flex; gap:3rem; }
+        .nav-links a {
+            color: var(--text-dim); text-decoration:none;
+            font-size:0.65rem; font-weight:700; text-transform:uppercase;
+            letter-spacing:3px; transition:0.4s;
+        }
+        .nav-links a:hover { color: var(--accent); }
 
-.hero {
-    height:100vh; display:flex; flex-direction:column;
-    justify-content:center; align-items:center; text-align:center;
-    position:relative; z-index:1;
-}
+        .hero {
+            height:100vh; display:flex; flex-direction:column;
+            justify-content:center; align-items:center; text-align:center;
+            position:relative; z-index:1;
+        }
 
-#bg-canvas { position:absolute; top:0; left:0; width:100%; height:100vh; z-index:0; pointer-events:none; }
+        #bg-canvas { position:absolute; top:0; left:0; width:100%; height:100vh; z-index:0; pointer-events:none; }
 
-.hero h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(5rem,18vw,11rem);
-    font-weight:700; letter-spacing:-8px; line-height:0.9;
-    background: linear-gradient(to bottom, #fff 20%, #666 50%, #000 95%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    z-index:2;
-}
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(5rem,18vw,11rem);
+            font-weight:700; letter-spacing:-8px; line-height:0.9;
+            background: linear-gradient(to bottom, #fff 20%, #666 50%, #000 95%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            z-index:2;
+        }
 
-.hero p {
-    font-size:0.8rem; color: var(--text-dim); letter-spacing:4px;
-    text-transform: uppercase; margin:2rem 0 3rem; z-index:2;
-}
+        .hero p {
+            font-size:0.8rem; color: var(--text-dim); letter-spacing:4px;
+            text-transform: uppercase; margin:2rem 0 3rem; z-index:2;
+        }
 
-.scroll-btn {
-    z-index:2;
-    background:white; color:black;
-    padding: 18px 40px;
-    border-radius:2px; text-decoration:none;
-    font-weight:800; font-size:0.7rem;
-    text-transform:uppercase; letter-spacing:3px;
-    transition:0.4s cubic-bezier(0.16,1,0.3,1);
-    border:1px solid white;
-}
-.scroll-btn:hover {
-    background:transparent; color:white; transform:scale(1.05);
-}
+        .scroll-btn {
+            z-index:10; /* Increased to stay above canvas */
+            background:white; color:black;
+            padding: 18px 40px;
+            border-radius:2px; text-decoration:none;
+            font-weight:800; font-size:0.7rem;
+            text-transform:uppercase; letter-spacing:3px;
+            transition:0.4s cubic-bezier(0.16,1,0.3,1);
+            border:1px solid white;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .scroll-btn:hover {
+            background:transparent; color:white; transform:scale(1.05);
+        }
 
-.experience-section { padding: 8rem 2rem; background:#000; border-top:1px solid var(--border); }
-.experience-section h4 { text-align:center; color:#444; font-size:0.7rem; letter-spacing:5px; margin-bottom:5rem; text-transform:uppercase;}
+        /* Centering Fix for Login Button */
+        #add-review-btn {
+            display: block;
+            margin: 4rem auto;
+            max-width: fit-content;
+        }
 
-.experience-grid {
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-    max-width:1200px; margin:0 auto; gap:2rem;
-}
+        .experience-section { padding: 8rem 2rem; background:#000; border-top:1px solid var(--border); }
+        .experience-section h4 { text-align:center; color:#444; font-size:0.7rem; letter-spacing:5px; margin-bottom:5rem; text-transform:uppercase;}
 
-.exp-card {
-    position:relative; height:350px; border-radius:4px; overflow:hidden;
-    text-decoration:none; 
-    border:1px solid var(--border);
-    transition:0.5s cubic-bezier(0.16,1,0.3,1);
-    background:#050505;
-}
-.exp-card:hover { transform: translateY(-10px); border-color:#fff; }
+        .experience-grid {
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+            max-width:1200px; margin:0 auto; gap:2rem;
+        }
 
-.exp-thumb {
-    position:absolute; top:0; left:0; width:100%; height:100%;
-    object-fit:cover; opacity:0.15; filter: grayscale(1);
-    transition:0.8s; z-index:0;
-}
-.exp-card:hover .exp-thumb { opacity:0.4; filter:grayscale(0); transform:scale(1.1); }
+        .exp-card {
+            position:relative; height:350px; border-radius:4px; overflow:hidden;
+            text-decoration:none; 
+            border:1px solid var(--border);
+            transition:0.5s cubic-bezier(0.16,1,0.3,1);
+            background:#050505;
+        }
+        .exp-card:hover { transform: translateY(-10px); border-color:#fff; }
 
-.exp-content {
-    position:relative; z-index:1; height:100%; padding:2.5rem;
-    display:flex; flex-direction:column; justify-content:flex-end;
-    background:linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%);
-}
-.exp-name { font-family:'Space Grotesk', sans-serif; font-size:1.4rem; font-weight:700; color:#fff; margin-bottom:0.5rem; }
-.exp-visits { font-size:0.75rem; color:#aaa; letter-spacing:2px; font-weight:600; }
+        .exp-thumb {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            object-fit:cover; opacity:0.15; filter: grayscale(1);
+            transition:0.8s; z-index:0;
+        }
+        .exp-card:hover .exp-thumb { opacity:0.4; filter:grayscale(0); transform:scale(1.1); }
 
-.section-container { max-width:1200px; margin:0 auto; padding:120px 2rem; }
-h2 { font-family:'Space Grotesk', sans-serif; font-size:3rem; margin-bottom:4rem; text-align:center; letter-spacing:-2px; }
+        .exp-content {
+            position:relative; z-index:1; height:100%; padding:2.5rem;
+            display:flex; flex-direction:column; justify-content:flex-end;
+            background:linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%);
+        }
+        .exp-name { font-family:'Space Grotesk', sans-serif; font-size:1.4rem; font-weight:700; color:#fff; margin-bottom:0.5rem; }
+        .exp-visits { font-size:0.75rem; color:#aaa; letter-spacing:2px; font-weight:600; }
 
-.project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(500px,1fr)); gap:3rem; }
-.project-card { background:var(--card); border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:0.4s; }
-.project-card:hover { border-color:#555; }
+        .section-container { max-width:1200px; margin:0 auto; padding:120px 2rem; }
+        h2 { font-family:'Space Grotesk', sans-serif; font-size:3rem; margin-bottom:4rem; text-align:center; letter-spacing:-2px; }
 
-.video-container { position:relative; width:100%; padding-bottom:56.25%; background:#000; }
-.video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+        .project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(500px,1fr)); gap:3rem; }
+        .project-card { background:var(--card); border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:0.4s; }
+        .project-card:hover { border-color:#555; }
 
-.project-info { padding:2.5rem; }
-.project-info h3 { font-family:'Space Grotesk', sans-serif; margin-bottom:0.5rem; }
-.project-info p { color: var(--text-dim); font-size:0.95rem; }
+        .video-container { position:relative; width:100%; padding-bottom:56.25%; background:#000; }
+        .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
 
-footer { text-align:center; padding:8rem 2rem; color:#111; font-size:0.6rem; letter-spacing:8px; }
+        .project-info { padding:2.5rem; }
+        .project-info h3 { font-family:'Space Grotesk', sans-serif; margin-bottom:0.5rem; }
+        .project-info p { color: var(--text-dim); font-size:0.95rem; }
 
-/* Modal CSS */
-.modal {
-    display:none; position:fixed; z-index:10000;
-    left:0; top:0; width:100%; height:100%;
-    background:rgba(0,0,0,0.8);
-    justify-content:center; align-items:center;
-}
-.modal.show { display:flex; }
-.modal-content {
-    background:#111; padding:2rem; border-radius:6px;
-    width:90%; max-width:400px; color:#fff;
-    position:relative;
-}
-.modal-content .close {
-    position:absolute; top:10px; right:15px; cursor:pointer;
-    font-size:1.5rem; color:#fff;
-}
-textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1px solid #555; background:#000; color:#fff; }
+        footer { text-align:center; padding:8rem 2rem; color:#444; font-size:0.6rem; letter-spacing:8px; }
 
-@media (max-width:768px) {
-    .project-grid { grid-template-columns:1fr; }
-    .hero h1 { font-size:4rem; letter-spacing:-3px; }
-}
-</style>
+        /* Modal CSS */
+        .modal {
+            display:none; position:fixed; z-index:10000;
+            left:0; top:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.8);
+            justify-content:center; align-items:center;
+        }
+        .modal.show { display:flex; }
+        .modal-content {
+            background:#111; padding:2rem; border-radius:6px;
+            width:90%; max-width:400px; color:#fff;
+            position:relative;
+            border: 1px solid var(--border);
+        }
+        .modal-content .close {
+            position:absolute; top:10px; right:15px; cursor:pointer;
+            font-size:1.5rem; color:#fff;
+        }
+        textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1px solid #555; background:#000; color:#fff; margin-top: 10px;}
+
+        /* Review Card Styling */
+        .review-card {
+            background: #080808;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+
+        @media (max-width:768px) {
+            .project-grid { grid-template-columns:1fr; }
+            .hero h1 { font-size:4rem; letter-spacing:-3px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -194,57 +213,35 @@ textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1p
                 <p>A high quality inventory system that can be used universally.</p>
             </div>
         </div>
-
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/kT_VbMqVZd4" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>Matchmaking System</h3>
-                <p>Matchmaking system that allows two players on different servers to teleport together.</p>
-            </div>
         </div>
-
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/ppBEsNG_EAI" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>Combat System</h3>
-                <p>M1 Combat System using raycasts for low latency and accurate hits.</p>
-            </div>
-        </div>
-    </div>
 </section>
 
-<!-- Reviews Section -->
 <section id="reviews" class="section-container">
     <h2>User Reviews</h2>
     <div id="reviews-container">
         <div style="text-align:center; padding:48px; color:#666;">
-            <i class="fas fa-spinner fa-spin"></i> Loading reviews...
+            Loading reviews...
         </div>
     </div>
 
-    <button id="add-review-btn" class="scroll-btn login-prompt">
-        <i class="fab fa-discord"></i> Login to Review
+    <button id="add-review-btn" class="scroll-btn">
+        Login to Review
     </button>
 
-    <!-- Review Modal -->
     <div id="review-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>Submit a Review</h3>
             <form id="review-form">
                 <label>Rating:</label><br>
-                <input type="radio" name="rating" value="1">1
-                <input type="radio" name="rating" value="2">2
-                <input type="radio" name="rating" value="3">3
-                <input type="radio" name="rating" value="4">4
-                <input type="radio" name="rating" value="5">5
-                <br><br>
+                <input type="radio" name="rating" value="1"> 1
+                <input type="radio" name="rating" value="2"> 2
+                <input type="radio" name="rating" value="3"> 3
+                <input type="radio" name="rating" value="4"> 4
+                <input type="radio" name="rating" value="5" checked> 5
+                <br>
                 <textarea id="review-text" placeholder="Write a review (optional)"></textarea><br><br>
-                <button type="submit" class="scroll-btn">Submit</button>
+                <button type="submit" class="scroll-btn" style="width: 100%;">Submit</button>
             </form>
         </div>
     </div>
@@ -252,10 +249,10 @@ textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1p
 
 <footer>&copy; 2026 SYSTEMS DESIGN</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+// --- Background Animation ---
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let dots = [];
@@ -289,73 +286,97 @@ function animate(){
 window.addEventListener('resize', init);
 init(); animate();
 
-// Supabase setup
-const supabase = supabase.createClient(
+// --- Supabase Logic ---
+const _supabase = window.supabase.createClient(
     'https://rbopuclyinxymbwoelqb.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJib3B1Y2x5aW54eW1id29lbHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzQ5OTQsImV4cCI6MjA5MDE1MDk5NH0.uk7SW8LJXzMkj_TBkJ3BVKAH_W8n7poBKUR2I_umM6A'
 );
+
 let currentUser = null;
 
-// Check auth session
-async function checkAuth(){
-    const { data: { session } } = await supabase.auth.getSession();
-    if(session?.user) currentUser = session.user;
-}
-checkAuth();
-
-// Load reviews
+// Load reviews on start
 async function loadReviews(){
-    const { data, error } = await supabase.from('reviews').select('*').order('created_at',{ascending:false});
+    const { data, error } = await _supabase.from('reviews').select('*').order('created_at',{ascending:false});
     const container = document.getElementById('reviews-container');
-    if(error) return container.innerHTML=`<p style="color:red;">Failed to load reviews</p>`;
-    if(!data.length) return container.innerHTML=`<p>No reviews yet!</p>`;
+    
+    if(error) {
+        container.innerHTML=`<p style="color:red; text-align:center;">Failed to load reviews</p>`;
+        return;
+    }
+    if(!data || data.length === 0) {
+        container.innerHTML=`<p style="text-align:center; color:#666;">No reviews yet!</p>`;
+        return;
+    }
+    
     container.innerHTML='';
     data.forEach(r=>{
         const div = document.createElement('div');
-        div.classList.add('review-card');
-        div.style.border='1px solid #555';
-        div.style.padding='1rem';
-        div.style.margin='1rem 0';
-        div.innerHTML=`<strong>${r.username}</strong> - ${r.rating}⭐<br><p>${r.text||'No comment'}</p>`;
+        div.className = 'review-card';
+        div.innerHTML=`<strong>${r.username}</strong> — ${r.rating} ⭐<p style="color:#aaa; margin-top:5px;">${r.text || 'No comment provided.'}</p>`;
         container.appendChild(div);
     });
 }
-loadReviews();
 
-// Login with Discord
-document.getElementById('add-review-btn').addEventListener('click', async ()=>{
-    if(!currentUser){
-        await supabase.auth.signInWithOAuth({
-            provider:'discord',
-            options:{redirectTo: 'https://shakedup123.github.io/nn/'}
+// Fixed Login / Add Review Button
+document.getElementById('add-review-btn').addEventListener('click', async () => {
+    const { data } = await _supabase.auth.getSession();
+    
+    if (!data.session) {
+        // Not logged in -> Go to Discord
+        await _supabase.auth.signInWithOAuth({
+            provider: 'discord',
+            options: { redirectTo: window.location.href }
         });
     } else {
+        // Logged in -> Show Modal
+        currentUser = data.session.user;
         document.getElementById('review-modal').classList.add('show');
     }
 });
 
+// Update button text if already logged in
+async function updateButtonState() {
+    const { data } = await _supabase.auth.getSession();
+    if (data.session) {
+        currentUser = data.session.user;
+        document.getElementById('add-review-btn').innerText = "Write a Review";
+    }
+}
+
 // Submit review
-document.getElementById('review-form').addEventListener('submit', async e=>{
+document.getElementById('review-form').addEventListener('submit', async e => {
     e.preventDefault();
     const rating = parseInt(document.querySelector('input[name="rating"]:checked')?.value);
     const text = document.getElementById('review-text').value;
+
     if(!rating) return alert('Please select a rating');
-    await supabase.from('reviews').insert([{
+
+    const { error } = await _supabase.from('reviews').insert([{
         user_id: currentUser.id,
-        username: currentUser.user_metadata.full_name || 'Anonymous',
-        rating,
-        text,
-        created_at: new Date().toISOString()
+        username: currentUser.user_metadata.full_name || currentUser.email || 'Anonymous',
+        rating: rating,
+        text: text
     }]);
-    document.getElementById('review-modal').classList.remove('show');
-    document.getElementById('review-form').reset();
-    loadReviews();
+
+    if (error) {
+        alert("Error saving review: " + error.message);
+    } else {
+        document.getElementById('review-modal').classList.remove('show');
+        document.getElementById('review-form').reset();
+        loadReviews();
+    }
 });
 
 // Close modal
 document.querySelectorAll('.close').forEach(el=>{
-    el.addEventListener('click', ()=>el.closest('.modal').classList.remove('show'));
+    el.addEventListener('click', ()=> {
+        document.getElementById('review-modal').classList.remove('show');
+    });
 });
+
+// Initialize
+loadReviews();
+updateButtonState();
 </script>
 
 </body>
