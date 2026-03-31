@@ -124,7 +124,11 @@
             background: #080808; border: 1px solid var(--border);
             padding: 1.5rem; margin-bottom: 1rem; border-radius: 4px;
         }
-        .review-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
+        
+        /* Avatar Styling */
+        .reviewer-info { display: flex; align-items: center; gap: 12px; }
+        .reviewer-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); object-fit: cover; }
 
         .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
         .modal.show { display:flex; }
@@ -291,9 +295,18 @@ async function loadReviews(){
     data.forEach(r => {
         const div = document.createElement('div');
         div.className = 'review-card';
+
+        const avatarImg = r.avatar ? `<img src="${r.avatar}" class="reviewer-avatar" alt="">` : `<div class="reviewer-avatar" style="background:#222;"></div>`;
+
         div.innerHTML = `
-            <div class="review-header"><strong>${r.username}</strong> <span>${"★".repeat(r.rating)}</span></div>
-            <p style="color:#888; font-size:0.9rem;">${r.text || 'No comment provided.'}</p>
+            <div class="review-header">
+                <div class="reviewer-info">
+                    ${avatarImg}
+                    <strong>${r.username}</strong>
+                </div>
+                <span>${"★".repeat(r.rating)}</span>
+            </div>
+            <p style="color:#888; font-size:0.9rem; padding-left: 44px;">${r.text || 'No comment provided.'}</p>
         `;
         container.appendChild(div);
     });
@@ -313,20 +326,37 @@ document.getElementById('review-form').addEventListener('submit', async e => {
     e.preventDefault();
     const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
     const text = document.getElementById('review-text').value;
+    
+    const avatarUrl = currentUser.user_metadata.avatar_url || '';
+
     const { error } = await _supabase.from('reviews').insert([{
         user_id: currentUser.id,
         username: currentUser.user_metadata.full_name || 'User',
+        avatar: avatarUrl,
         rating: rating,
         text: text
     }]);
+
     if (!error) {
         document.getElementById('review-modal').classList.remove('show');
         document.getElementById('review-form').reset();
         loadReviews();
+    } else {
+        console.error("Error submitting review:", error);
     }
 });
 
 document.querySelector('.close').onclick = () => document.getElementById('review-modal').classList.remove('show');
+
+async function checkAuth() {
+    const { data } = await _supabase.auth.getSession();
+    if (data.session) {
+        currentUser = data.session.user;
+        document.getElementById('add-review-btn').innerText = "Write a Review";
+    }
+}
+
+checkAuth();
 loadReviews();
 </script>
 </body>
