@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>fourl | Scripter Portfolio</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
-            --bg: #020202;
-            --accent: #ffffff;
-            --card: #080808;
-            --text-dim: #666;
-            --border: rgba(255, 255, 255, 0.15);
-            --nav-bg: rgba(2, 2, 2, 0.9);
+            --bg: #030305;
+            --card-bg: #0a0a0f;
+            --accent: #3b82f6; 
+            --accent-glow: rgba(59, 130, 246, 0.2);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.06);
+            --status-green: #22c55e;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
@@ -21,128 +23,118 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
-            color:white;
-            line-height:1.6;
-            overflow-x:hidden;
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
         nav {
-            position: fixed;
-            top: 0; width: 100%; height: 70px;
+            position: fixed; top: 0; width: 100%; height: 70px;
             display: flex; justify-content: center; align-items: center;
-            background: var(--nav-bg); backdrop-filter: blur(20px);
-            z-index:1000; border-bottom: 1px solid var(--border);
+            background: rgba(3, 3, 5, 0.8); backdrop-filter: blur(12px);
+            z-index: 1000; border-bottom: 1px solid var(--border);
         }
-        .nav-links { display:flex; gap:3rem; }
+        .nav-links { display: flex; gap: 2.5rem; }
         .nav-links a {
-            color: var(--text-dim); text-decoration:none;
-            font-size:0.65rem; font-weight:700; text-transform:uppercase;
-            letter-spacing:3px; transition:0.4s;
+            color: var(--text-dim); text-decoration: none;
+            font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s;
         }
         .nav-links a:hover { color: var(--accent); }
 
         .hero {
-            height:100vh; display:flex; flex-direction:column;
-            justify-content:center; align-items:center; text-align:center;
-            position:relative; z-index:1;
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; padding: 0 2rem;
+            background: radial-gradient(circle at center, #0a0c1a 0%, #030305 100%);
         }
 
-        #bg-canvas { position:absolute; top:0; left:0; width:100%; height:100vh; z-index:0; pointer-events:none; }
+        .availability-badge {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(34, 197, 94, 0.1); color: var(--status-green);
+            padding: 8px 16px; border-radius: 100px;
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 1.5rem; border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        .dot { width: 8px; height: 8px; background: var(--status-green); border-radius: 50%; box-shadow: 0 0 10px var(--status-green); animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 1; } 70% { transform: scale(1.2); opacity: 0.5; } 100% { transform: scale(0.95); opacity: 1; } }
 
         .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(5rem,18vw,11rem);
-            font-weight:700; letter-spacing:-8px; line-height:0.9;
-            background: linear-gradient(to bottom, #fff 20%, #666 50%, #000 95%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            z-index:2;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 800; letter-spacing: -3px; margin-bottom: 0.5rem;
         }
+        .hero .bio { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; margin-bottom: 2.5rem; }
 
-        .hero p {
-            font-size:0.8rem; color: var(--text-dim); letter-spacing:4px;
-            text-transform: uppercase; margin:2rem 0 3rem; z-index:2;
+        .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .cta-btn {
+            background: var(--accent); color: #fff; padding: 18px 35px;
+            border-radius: 8px; text-decoration: none; font-weight: 700;
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s; border: none;
+            box-shadow: 0 4px 20px var(--accent-glow); cursor: pointer;
         }
+        .cta-btn.secondary { background: transparent; border: 1px solid var(--border); box-shadow: none; }
+        .cta-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+        .cta-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
 
-        .scroll-btn {
-            z-index:10;
-            background:white; color:black;
-            padding: 18px 40px;
-            border-radius:2px; text-decoration:none;
-            font-weight:800; font-size:0.7rem;
-            text-transform:uppercase; letter-spacing:3px;
-            transition:0.4s cubic-bezier(0.16,1,0.3,1);
-            border:1px solid white;
-            cursor: pointer;
+        .stats-row {
+            display: flex; gap: 4rem; margin-top: 4rem;
+            padding-top: 2rem; border-top: 1px solid var(--border);
         }
-        .scroll-btn:hover { background:transparent; color:white; transform:scale(1.05); }
+        .stat-item { text-align: center; }
+        .stat-value { display: block; font-size: 2.2rem; font-weight: 800; color: var(--accent); font-family: 'Plus Jakarta Sans'; }
+        .stat-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; }
 
-        .experience-section { padding: 8rem 2rem; background:#000; border-top:1px solid var(--border); }
-        .experience-section h4 { text-align:center; color:#444; font-size:0.7rem; letter-spacing:5px; margin-bottom:5rem; text-transform:uppercase;}
-
-        .experience-grid {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
-            max-width:1200px; margin:0 auto; gap:2rem;
-        }
-
-        .exp-card {
-            position:relative; height:350px; border-radius:4px; overflow:hidden;
-            text-decoration:none; border:1px solid var(--border);
-            transition:0.5s cubic-bezier(0.16,1,0.3,1); background:#050505;
-        }
-        .exp-card:hover { transform: translateY(-10px); border-color:#fff; }
-        .exp-thumb { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0.15; filter: grayscale(1); transition:0.8s; z-index:0; }
-        .exp-card:hover .exp-thumb { opacity:0.4; filter:grayscale(0); transform:scale(1.1); }
-        .exp-content { position:relative; z-index:1; height:100%; padding:2.5rem; display:flex; flex-direction:column; justify-content:flex-end; background:linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%); }
-        .exp-name { font-family:'Space Grotesk', sans-serif; font-size:1.4rem; font-weight:700; color:#fff; margin-bottom:0.5rem; }
-        .exp-visits { font-size:0.75rem; color:#aaa; letter-spacing:2px; font-weight:600; }
-
-        .section-container { max-width:1200px; margin:0 auto; padding:120px 2rem; }
-        h2 { font-family:'Space Grotesk', sans-serif; font-size:3rem; margin-bottom:4rem; text-align:center; letter-spacing:-2px; }
-
-        .project-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(500px,1fr)); gap:3rem; }
-        .project-card { background:var(--card); border:1px solid var(--border); border-radius:4px; overflow:hidden; transition:0.4s; }
-        .project-card:hover { border-color:#555; }
-        .video-container { position:relative; width:100%; padding-bottom:56.25%; background:#000; }
-        .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
-        .project-info { padding:2.5rem; }
-        .project-info h3 { font-family:'Space Grotesk', sans-serif; margin-bottom:0.5rem; }
-        .project-info p { color: var(--text-dim); font-size:0.95rem; }
-
-        .rating-summary {
-            display: flex; align-items: center; justify-content: center; gap: 4rem;
-            margin-bottom: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border); border-radius: 4px;
-        }
-        .avg-box { text-align: center; }
-        .avg-number { font-size: 5rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1; }
-        .rating-bars { flex-grow: 1; max-width: 400px; }
-        .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.7rem; color: #666; }
-        .bar-bg { flex-grow: 1; height: 4px; background: #111; border-radius: 2px; overflow: hidden; }
-        .bar-fill { height: 100%; background: #fff; width: 0%; transition: width 1s ease-out; }
-
-        .review-card {
-            background: #080808; border: 1px solid var(--border);
-            padding: 1.5rem; margin-bottom: 1rem; border-radius: 4px;
-        }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-family: 'Space Grotesk'; }
+        .experience-bar { background: #07070c; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 80px 2rem; }
+        .experience-bar h4 { text-align: center; color: #444; font-size: 0.7rem; letter-spacing: 5px; margin-bottom: 3rem; text-transform: uppercase; }
+        .exp-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
         
-        /* Avatar Styling */
-        .reviewer-info { display: flex; align-items: center; gap: 12px; }
-        .reviewer-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); object-fit: cover; }
+        .exp-card-mini { 
+            background: var(--card-bg); border: 1px solid var(--border); padding: 25px; 
+            border-radius: 12px; display: flex; align-items: center; gap: 25px; 
+            text-decoration: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 400px;
+        }
+        .exp-card-mini:hover { border-color: var(--accent); transform: translateY(-5px); background: #0e0e16; }
+        .exp-thumb-mini { width: 120px; height: 120px; border-radius: 10px; object-fit: cover; border: 1px solid var(--border); }
+        .exp-info-mini strong { display: block; color: #fff; font-size: 1.5rem; margin-bottom: 5px; font-family: 'Plus Jakarta Sans'; }
+        .exp-info-mini span { color: var(--accent); font-size: 0.85rem; font-weight: 800; letter-spacing: 1.5px; }
 
-        .modal { display:none; position:fixed; z-index:10000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
-        .modal.show { display:flex; }
-        .modal-content { background:#111; padding:2rem; border-radius:6px; width:90%; max-width:400px; color:#fff; position:relative; border: 1px solid var(--border); }
-        .close { position:absolute; top:10px; right:15px; cursor:pointer; font-size:1.5rem; }
-        textarea { width:100%; height:80px; padding:0.5rem; border-radius:4px; border:1px solid #333; background:#000; color:#fff; margin-top: 10px; }
+        .section { padding: 120px 2rem; max-width: 1100px; margin: 0 auto; }
+        .section-title { font-family: 'Plus Jakarta Sans'; font-size: 2rem; margin-bottom: 3.5rem; text-align: center; }
+        .section-title span { color: var(--accent); }
+        
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .skill-item { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid var(--border); transition: 0.3s; }
+        .skill-name { font-weight: 800; color: #fff; font-size: 1.2rem; display: block; margin-bottom: 12px; }
+        .skill-desc { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
 
-        #add-review-btn { display: block; margin: 4rem auto; max-width: fit-content; }
+        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2.5rem; }
+        .work-card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+        .video-container { position: relative; padding-bottom: 56.25%; background: #000; }
+        .video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:none; }
+        .work-info { padding: 1.5rem; }
 
-        footer { text-align:center; padding:8rem 2rem; color:#111; font-size:0.6rem; letter-spacing:8px; }
+        .rating-summary { display: flex; align-items: center; gap: 4rem; margin-bottom: 3rem; padding: 3rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; }
+        .avg-number { font-size: 4.5rem; font-weight: 800; line-height: 1; }
+        .bar-row { display:flex; align-items:center; gap:12px; margin-bottom:8px; font-size: 0.8rem; color: var(--text-dim); }
+        .bar-bg { flex-grow: 1; height: 6px; background: #1a1a24; border-radius: 10px; overflow: hidden; min-width: 150px; }
+        .bar-fill { height: 100%; background: var(--accent); width: 0%; transition: 1.2s ease-out; }
+        .review-card { background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+        .reviewer-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .reviewer-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
 
-        @media (max-width:768px) {
-            .rating-summary { flex-direction: column; gap: 2rem; }
-            .project-grid { grid-template-columns:1fr; }
+        .modal { display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; }
+        .modal-content { background:#0f0f18; padding:2.5rem; border-radius:12px; width:90%; max-width:450px; border: 1px solid var(--accent); }
+
+        @media (max-width: 768px) { 
+            .work-grid { grid-template-columns: 1fr; } 
+            .rating-summary { flex-direction: column; text-align: center; } 
+            .stats-row { gap: 2rem; }
+            .exp-card-mini { min-width: 100%; gap: 15px; padding: 15px; }
+            .exp-thumb-mini { width: 80px; height: 80px; }
+            .exp-info-mini strong { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -150,213 +142,181 @@
 
 <nav>
     <div class="nav-links">
-        <a href="#">Home</a>
-        <a href="#experience">Experience</a>
-        <a href="#projects">Projects</a>
+        <a href="#home">Home</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Projects</a>
         <a href="#reviews">Reviews</a>
     </div>
 </nav>
 
-<canvas id="bg-canvas"></canvas>
+<section class="hero" id="home">
+    <div class="availability-badge">
+        <div class="dot"></div>
+        Available for Work
+    </div>
+    <h1>fourl.</h1>
+    <p class="bio">Experienced programmer, with 4+ years of experience, and full-stack development.</p>
+    
+    <div class="btn-group">
+        <a href="#skills" class="cta-btn">View My Skills</a>
+        <a href="https://discord.com/users/1210753843038789712" target="_blank" class="cta-btn secondary">Get In Touch</a>
+    </div>
 
-<section class="hero">
-    <h1>SCRIPTER.</h1>
-    <p>I am fourl, a professional scripter with 4+ years of experience.</p>
-    <a href="#experience" class="scroll-btn">View Projects</a>
+    <div class="stats-row">
+        <div class="stat-item">
+            <span class="stat-value">153M+</span>
+            <span class="stat-label">Visits Contributed</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-value">4+</span>
+            <span class="stat-label">Years as Scripter</span>
+        </div>
+    </div>
 </section>
 
-<section id="experience" class="experience-section">
-    <h4>Games Developed For</h4>
-    <div class="experience-grid">
-        <a href="https://www.roblox.com/games/16404660684/BODYCAM" class="exp-card" target="_blank">
-            <img src="bodycam.png" class="exp-thumb" alt="Body Cam">
-            <div class="exp-content">
-                <span class="exp-name">Body Cam</span>
-                <span class="exp-visits">153.4M+ VISITS</span>
+<section class="experience-bar">
+    <h4>Past Games Worked On</h4>
+    <div class="exp-grid">
+        <a href="https://www.roblox.com/games/16404660684/BODYCAM" class="exp-card-mini" target="_blank">
+            <img src="bodycam.png" alt="Body Cam Thumbnail" class="exp-thumb-mini">
+            <div class="exp-info-mini">
+                <strong>Body Cam</strong>
+                <span>153.4M+ VISITS</span>
             </div>
         </a>
     </div>
 </section>
 
-<section id="projects" class="section-container">
-    <h2>Example Works</h2>
-    <div class="project-grid">
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/vMTlYW00iaw" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>High Quality Inventory System</h3>
-                <p>A high quality inventory system that can be used universally.</p>
-            </div>
+<section class="section" id="skills">
+    <h2 class="section-title">Technical <span>Expertise</span></h2>
+    <div class="skill-grid">
+        <div class="skill-item">
+            <span class="skill-name">DataStore Systems</span>
+            <p class="skill-desc">DataStore systems with no data-loss and optimized. Structured and organized for a multitude of games.</p>
         </div>
-
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/kT_VbMqVZd4" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>Matchmaking System</h3>
-                <p>Matchmaking system that allows two players on different servers to teleport together.</p>
-            </div>
+        <div class="skill-item">
+            <span class="skill-name">Combat Mechanics</span>
+            <p class="skill-desc">Development of low-latency combat with accurate hitboxes. Anti-Exploitable and organized for new moves.</p>
         </div>
-
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/3I_36A00a3E" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>Combat System</h3>
-                <p>M1 Combat System using raycasts for low latency and accurate hits.</p>
-            </div>
+        <div class="skill-item">
+            <span class="skill-name">Matchmaking & Memory</span>
+            <p class="skill-desc">Matchmaking systems optimized for large player bases. Scalable, organized, and guaranteed success.</p>
         </div>
-
-        <div class="project-card">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/wIazrSeR4Lk" allowfullscreen></iframe>
-            </div>
-            <div class="project-info">
-                <h3>Gun System</h3>
-                <p>Unfinished gun-system using viewmodel with a aim-in, sway, and bobbing.</p>
-            </div>
+        <div class="skill-item">
+            <span class="skill-name">OOP and Organization</span>
+            <p class="skill-desc">Object-oriented code that is organized and readable. Other scripters can easily built onto my scripts if needed.</p>
+        </div>
+                <div class="skill-item">
+            <span class="skill-name">Full Stack Development</span>
+            <p class="skill-desc">Frontend or backend development is no problem for me. Guaranteed to be optimized and organized for both.</p>
         </div>
     </div>
 </section>
 
-<section id="reviews" class="section-container">
-    <h2>User Reviews</h2>
-    
+<section class="section" id="work">
+    <h2 class="section-title">Original <span>Works</span></h2>
+    <div class="work-grid">
+        <div class="work-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/vMTlYW00iaw"></iframe></div><div class="work-info"><h3>Inventory System</h3><p>Simple but organized and universal for any game.</p></div></div>
+        <div class="work-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/kT_VbMqVZd4"></iframe></div><div class="work-info"><h3>Matchmaking System</h3><p>Cross-server queuing logic.</p></div></div>
+        <div class="work-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/3I_36A00a3E"></iframe></div><div class="work-info"><h3>Combat System</h3><p>Raycast-based hitboxes and modular code.</p></div></div>
+        <div class="work-card"><div class="video-container"><iframe src="https://www.youtube.com/embed/wIazrSeR4Lk"></iframe></div><div class="work-info"><h3>Gun System</h3><p>Advanced viewmodel and bobbing.</p></div></div>
+    </div>
+</section>
+
+<section class="section" id="reviews">
+    <h2 class="section-title">User <span>Feedback</span></h2>
     <div class="rating-summary">
-        <div class="avg-box">
+        <div>
             <span class="avg-number" id="avg-val">0.0</span>
-            <div id="avg-stars" style="color: #ffcc00;"></div>
-            <p style="font-size: 0.6rem; color: #444; text-transform: uppercase; margin-top: 10px;">Overall Rating</p>
+            <div id="avg-stars" style="color: #fbbf24; margin-top:10px;"></div>
         </div>
-        <div class="rating-bars">
-            <div class="bar-row">5 <div class="bar-bg"><div id="bar-5" class="bar-fill"></div></div></div>
-            <div class="bar-row">4 <div class="bar-bg"><div id="bar-4" class="bar-fill"></div></div></div>
-            <div class="bar-row">3 <div class="bar-bg"><div id="bar-3" class="bar-fill"></div></div></div>
-            <div class="bar-row">2 <div class="bar-bg"><div id="bar-2" class="bar-fill"></div></div></div>
-            <div class="bar-row">1 <div class="bar-bg"><div id="bar-1" class="bar-fill"></div></div></div>
+        <div style="flex-grow:1; max-width: 400px;">
+            <div class="bar-row">5 ★ <div class="bar-bg"><div id="bar-5" class="bar-fill"></div></div></div>
+            <div class="bar-row">4 ★ <div class="bar-bg"><div id="bar-4" class="bar-fill"></div></div></div>
+            <div class="bar-row">3 ★ <div class="bar-bg"><div id="bar-3" class="bar-fill"></div></div></div>
+            <div class="bar-row">2 ★ <div class="bar-bg"><div id="bar-2" class="bar-fill"></div></div></div>
+            <div class="bar-row">1 ★ <div class="bar-bg"><div id="bar-1" class="bar-fill"></div></div></div>
         </div>
     </div>
 
     <div id="reviews-container"></div>
-
-    <button id="add-review-btn" class="scroll-btn">Login to Review</button>
+    <button id="add-review-btn" class="cta-btn" style="display:block; margin: 3rem auto;">Login to Review</button>
 
     <div id="review-modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Submit Review</h3>
+            <h3 style="margin-bottom:20px;">Submit Review</h3>
             <form id="review-form">
-                <label>Rating:</label><br>
-                <input type="radio" name="rating" value="1"> 1
-                <input type="radio" name="rating" value="2"> 2
-                <input type="radio" name="rating" value="3"> 3
-                <input type="radio" name="rating" value="4"> 4
-                <input type="radio" name="rating" value="5" checked> 5
-                <br>
-                <textarea id="review-text" placeholder="Write a comment..."></textarea><br><br>
-                <button type="submit" class="scroll-btn" style="width: 100%;">Submit</button>
+                <input type="number" name="rating" min="1" max="5" value="5" style="width:100%; padding:12px; background:#000; color:#fff; border:1px solid #333; border-radius: 6px;">
+                <textarea id="review-text" placeholder="Your feedback..." style="width:100%; height:120px; padding:12px; background:#000; color:#fff; border:1px solid #333; margin: 15px 0; border-radius: 6px;"></textarea>
+                <button type="submit" class="cta-btn" style="width:100%">Post Review</button>
+                <p id="close-modal" style="text-align:center; margin-top:20px; cursor:pointer; color: var(--text-dim);">Close</p>
             </form>
         </div>
     </div>
 </section>
 
-<footer>&copy; 2026 SYSTEMS DESIGN</footer>
+<footer style="text-align:center; padding: 100px 0; color: #333; font-size:0.7rem; letter-spacing:4px;">
+    &copy; 2026 SYSTEMS DESIGN • FOURL
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
-let dots = [];
-function init() {
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    dots = [];
-    for(let i=0;i<60;i++){ dots.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3 }); }
-}
-function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle="rgba(255,255,255,0.25)";
-    dots.forEach(d=>{ d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>canvas.width)d.vx*=-1; if(d.y<0||d.y>canvas.height)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,1,0,Math.PI*2); ctx.fill(); });
-    requestAnimationFrame(animate);
-}
-window.addEventListener('resize', init); init(); animate();
-
 const _supabase = window.supabase.createClient('https://rbopuclyinxymbwoelqb.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJib3B1Y2x5aW54eW1id29lbHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1NzQ5OTQsImV4cCI6MjA5MDE1MDk5NH0.uk7SW8LJXzMkj_TBkJ3BVKAH_W8n7poBKUR2I_umM6A');
 let currentUser = null;
 
 async function loadReviews(){
     const { data, error } = await _supabase.from('reviews').select('*').order('created_at',{ascending:false});
-    const container = document.getElementById('reviews-container');
     if(error || !data) return;
-
     const total = data.length;
     const avg = total > 0 ? (data.reduce((acc, curr) => acc + curr.rating, 0) / total).toFixed(1) : "0.0";
     document.getElementById('avg-val').innerText = avg;
     document.getElementById('avg-stars').innerText = "★".repeat(Math.round(avg));
-
-    for(let i=1; i<=5; i++){
-        const count = data.filter(r => r.rating === i).length;
-        document.getElementById(`bar-${i}`).style.width = total > 0 ? (count/total)*100 + '%' : '0%';
-    }
-
+    [5,4,3,2,1].forEach(num => {
+        const count = data.filter(r => r.rating === num).length;
+        document.getElementById(`bar-${num}`).style.width = total > 0 ? (count/total)*100 + '%' : '0%';
+    });
+    const container = document.getElementById('reviews-container');
     container.innerHTML = '';
     data.forEach(r => {
         const div = document.createElement('div');
         div.className = 'review-card';
-
-        const avatarImg = r.avatar ? `<img src="${r.avatar}" class="reviewer-avatar" alt="">` : `<div class="reviewer-avatar" style="background:#222;"></div>`;
-
         div.innerHTML = `
-            <div class="review-header">
-                <div class="reviewer-info">
-                    ${avatarImg}
+            <div class="reviewer-info">
+                <img src="${r.avatar || ''}" class="reviewer-avatar" onerror="this.src='https://ui-avatars.com/api/?name=${r.username}'">
+                <div>
                     <strong>${r.username}</strong>
+                    <span style="color:#fbbf24; font-size: 0.8rem; display:block;">${"★".repeat(r.rating)}</span>
                 </div>
-                <span>${"★".repeat(r.rating)}</span>
             </div>
-            <p style="color:#888; font-size:0.9rem; padding-left: 44px;">${r.text || 'No comment provided.'}</p>
+            <p style="color:var(--text-dim); font-size:0.9rem;">${r.text || 'No comment.'}</p>
         `;
         container.appendChild(div);
     });
 }
 
-document.getElementById('add-review-btn').addEventListener('click', async () => {
+document.getElementById('add-review-btn').onclick = async () => {
     const { data } = await _supabase.auth.getSession();
     if (!data.session) {
         await _supabase.auth.signInWithOAuth({ provider: 'discord', options: { redirectTo: window.location.href } });
     } else {
         currentUser = data.session.user;
-        document.getElementById('review-modal').classList.add('show');
+        document.getElementById('review-modal').style.display = 'flex';
     }
-});
+};
 
-document.getElementById('review-form').addEventListener('submit', async e => {
+document.getElementById('review-form').onsubmit = async e => {
     e.preventDefault();
-    const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
-    const text = document.getElementById('review-text').value;
-    
-    const avatarUrl = currentUser.user_metadata.avatar_url || '';
-
     const { error } = await _supabase.from('reviews').insert([{
         user_id: currentUser.id,
-        username: currentUser.user_metadata.full_name || 'User',
-        avatar: avatarUrl,
-        rating: rating,
-        text: text
+        username: currentUser.user_metadata.full_name,
+        avatar: currentUser.user_metadata.avatar_url,
+        rating: parseInt(e.target.rating.value),
+        text: document.getElementById('review-text').value
     }]);
+    if (!error) { document.getElementById('review-modal').style.display = 'none'; loadReviews(); }
+};
 
-    if (!error) {
-        document.getElementById('review-modal').classList.remove('show');
-        document.getElementById('review-form').reset();
-        loadReviews();
-    } else {
-        console.error("Error submitting review:", error);
-    }
-});
-
-document.querySelector('.close').onclick = () => document.getElementById('review-modal').classList.remove('show');
+document.getElementById('close-modal').onclick = () => document.getElementById('review-modal').style.display = 'none';
 
 async function checkAuth() {
     const { data } = await _supabase.auth.getSession();
@@ -366,8 +326,7 @@ async function checkAuth() {
     }
 }
 
-checkAuth();
-loadReviews();
+checkAuth(); loadReviews();
 </script>
 </body>
 </html>
